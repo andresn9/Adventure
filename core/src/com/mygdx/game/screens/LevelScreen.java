@@ -31,14 +31,14 @@ import com.mygdx.game.actors.Sword;
 import com.mygdx.game.actors.TilemapActor;
 import com.mygdx.game.actors.Treasure;
 
-public class LevelScreen extends BaseScreen{
+public class LevelScreen extends BaseScreen {
     com.mygdx.game.actors.Hero hero;
     com.mygdx.game.actors.Sword sword;
     com.mygdx.game.actors.Treasure treasure;
     com.mygdx.game.actors.ShopHeart shopHeart;
     com.mygdx.game.actors.ShopArrow shopArrow;
 
-   boolean gameOver;
+    boolean gameOver;
     Label healthLabel;
     Label coinLabel;
     Label arrowLabel;
@@ -47,13 +47,15 @@ public class LevelScreen extends BaseScreen{
 
 
     public void initialize() {
-        com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map.tmx", mainStage);
+        com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map.tmx", mainStage);
 
         MapObject startPoint = tma.getRectangleList("Start").get(0);
         MapProperties startProps = startPoint.getProperties();
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
 
-       gameOver = false;
+
+
+        gameOver = false;
         healthLabel = new Label(" x " + hero.getHealth(), BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
         coinLabel = new Label(" x " + hero.getCoins(), BaseGame.labelStyle);
@@ -94,7 +96,6 @@ public class LevelScreen extends BaseScreen{
         uiTable.add(dialogBox).colspan(8);
 
 
-
         for (MapObject obj : tma.getRectangleList("Solid")) {
             MapProperties props = obj.getProperties();
             new Solid((float) props.get("x"), (float) props.get("y"),
@@ -120,36 +121,42 @@ public class LevelScreen extends BaseScreen{
             new com.mygdx.game.actors.Coin((float) props.get("x"), (float) props.get("y"), mainStage);
         }
 
-        for (MapObject obj : tma.getTileList("Flyer") )
-        {
+        for (MapObject obj : tma.getTileList("Flyer")) {
             MapProperties props = obj.getProperties();
-            new Flyer( (float)props.get("x"), (float)props.get("y"), mainStage );
+            new Flyer((float) props.get("x"), (float) props.get("y"), mainStage);
         }
 
-        for (MapObject obj : tma.getTileList("NPC") )
-        {
+        for (MapObject obj : tma.getTileList("NPC")) {
             MapProperties props = obj.getProperties();
-            com.mygdx.game.actors.NPC s = new com.mygdx.game.actors.NPC( (float)props.get("x"), (float)props.get("y"), mainStage );
-            s.setID( (String)props.get("id") );
-            s.setText( (String)props.get("text") );
+            com.mygdx.game.actors.NPC s = new com.mygdx.game.actors.NPC((float) props.get("x"), (float) props.get("y"), mainStage);
+            s.setID((String) props.get("id"));
+            s.setText((String) props.get("text"));
         }
 
-        MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
-        MapProperties shopHeartProps = shopHeartTile.getProperties();
-        shopHeart = new ShopHeart( (float)shopHeartProps.get("x"), (float)shopHeartProps.get("y"),
-                mainStage );
-        MapObject shopArrowTile = tma.getTileList("ShopArrow").get(0);
-        MapProperties shopArrowProps = shopArrowTile.getProperties();
-        shopArrow = new ShopArrow( (float)shopArrowProps.get("x"), (float)shopArrowProps.get("y"),
-                mainStage );
+            MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
+            MapProperties shopHeartProps = shopHeartTile.getProperties();
+            shopHeart = new ShopHeart((float) shopHeartProps.get("x"), (float) shopHeartProps.get("y"),
+                    mainStage);
+            MapObject shopArrowTile = tma.getTileList("ShopArrow").get(0);
+            MapProperties shopArrowProps = shopArrowTile.getProperties();
+            shopArrow = new ShopArrow((float) shopArrowProps.get("x"), (float) shopArrowProps.get("y"),
+                    mainStage);
+
+
+            MapObject treasureTile = tma.getTileList("Treasure").get(0);
+            MapProperties treasureProps = treasureTile.getProperties();
+            treasure = new Treasure((float) treasureProps.get("x"), (float) treasureProps.get("y"),
+                    mainStage);
+
+            hero.remove();
+            hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
 
 
 
-        MapObject treasureTile = tma.getTileList("Treasure").get(0);
-        MapProperties treasureProps = treasureTile.getProperties();
-        treasure = new Treasure((float) treasureProps.get("x"), (float) treasureProps.get("y"),
-                mainStage);
+
     }
+
+
 
     public void update(float dt) {
         healthLabel.setText(" x " + hero.getHealth());
@@ -160,8 +167,7 @@ public class LevelScreen extends BaseScreen{
             return;
 
 
-
-        if (!sword.isVisible()&& !hero.isFrozen()) {
+        if (!sword.isVisible() && !hero.isFrozen()) {
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
                 hero.accelerateAtAngle(180);
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
@@ -172,17 +178,14 @@ public class LevelScreen extends BaseScreen{
                 hero.accelerateAtAngle(270);
             for (com.mygdx.game.actors.BaseActor solid : com.mygdx.game.actors.BaseActor.getList(mainStage, "Solid")) {
                 hero.preventOverlap(solid);
-                for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer"))
-                {
-                    if (flyer.overlaps(solid))
-                    {
+                for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer")) {
+                    if (flyer.overlaps(solid)) {
                         flyer.preventOverlap(solid);
-                        flyer.setMotionAngle( flyer.getMotionAngle() + 180 );
+                        flyer.setMotionAngle(flyer.getMotionAngle() + 180);
                     }
                 }
             }
         }
-
 
 
         if (sword.isVisible()) {
@@ -190,14 +193,12 @@ public class LevelScreen extends BaseScreen{
                 if (sword.overlaps(bush))
                     bush.remove();
             }
-            for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer"))
-            {
-                if (sword.overlaps(flyer))
-                {
+            for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer")) {
+                if (sword.overlaps(flyer)) {
                     flyer.remove();
-                    com.mygdx.game.actors.Coin coin = new com.mygdx.game.actors.Coin(0,0, mainStage);
+                    com.mygdx.game.actors.Coin coin = new com.mygdx.game.actors.Coin(0, 0, mainStage);
                     coin.centerAtActor(flyer);
-                    com.mygdx.game.actors.Smoke smoke = new com.mygdx.game.actors.Smoke(0,0, mainStage);
+                    com.mygdx.game.actors.Smoke smoke = new com.mygdx.game.actors.Smoke(0, 0, mainStage);
                     smoke.centerAtActor(flyer);
                 }
             }
@@ -220,8 +221,7 @@ public class LevelScreen extends BaseScreen{
             gameOver = true;
         }
 
-        if ( hero.getHealth()<= 0 )
-        {
+        if (hero.getHealth() <= 0) {
             messageLabel.setText("Game over...");
             messageLabel.setColor(Color.RED);
             messageLabel.setFontScale(2);
@@ -229,24 +229,22 @@ public class LevelScreen extends BaseScreen{
             hero.remove();
             gameOver = true;
         }
-        for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer"))
-        {
-            if ( hero.overlaps(flyer) )
-            {
+        for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer")) {
+            if (hero.overlaps(flyer)) {
                 hero.preventOverlap(flyer);
-                flyer.setMotionAngle( flyer.getMotionAngle() + 180 );
-                Vector2 heroPosition = new Vector2( hero.getX(), hero.getY() );
-                Vector2 flyerPosition = new Vector2( flyer.getX(), flyer.getY() );
-                Vector2 hitVector = heroPosition.sub( flyerPosition );
-                hero.accelerateAtAngle( hitVector.angle() );
+                flyer.setMotionAngle(flyer.getMotionAngle() + 180);
+                Vector2 heroPosition = new Vector2(hero.getX(), hero.getY());
+                Vector2 flyerPosition = new Vector2(flyer.getX(), flyer.getY());
+                Vector2 hitVector = heroPosition.sub(flyerPosition);
+                hero.accelerateAtAngle(hitVector.angle());
                 hero.setAnimationPaused(true);
                 hero.setFrozen(true);
                 hero.setMaxSpeed(400);
                 hero.setDeceleration(0);
-                hero.setHealth(hero.getHealth()-1);
+                hero.setHealth(hero.getHealth() - 1);
                 hero.setVulnerable(false);
                 float delay = 0.1f; // seconds
-                Timer.schedule(new Timer.Task(){
+                Timer.schedule(new Timer.Task() {
                     @Override
                     public void run() {
 
@@ -258,10 +256,6 @@ public class LevelScreen extends BaseScreen{
                     }
 
                 }, delay);
-
-
-
-
 
 
             }
@@ -289,42 +283,36 @@ public class LevelScreen extends BaseScreen{
             }
         }
 
-        for ( com.mygdx.game.actors.BaseActor npcActor : com.mygdx.game.actors.BaseActor.getList(mainStage, "NPC") )
-        {
-            com.mygdx.game.actors.NPC npc = (NPC)npcActor;
+        for (com.mygdx.game.actors.BaseActor npcActor : com.mygdx.game.actors.BaseActor.getList(mainStage, "NPC")) {
+            com.mygdx.game.actors.NPC npc = (NPC) npcActor;
             hero.preventOverlap(npc);
             boolean nearby = hero.isWithinDistance(4, npc);
-            if ( nearby && !npc.isViewing() )
-            {
+            if (nearby && !npc.isViewing()) {
 // check NPC ID for dynamic text
-                if ( npc.getID().equals("Gatekeeper") )
-                {
+                if (npc.getID().equals("Gatekeeper")) {
                     int flyerCount = BaseActor.count(mainStage, "Flyer");
                     String message = "Destroy the Flyers and you can have the treasure. ";
-                    if ( flyerCount > 1 )
+                    if (flyerCount > 1)
                         message += "There are " + flyerCount + " left.";
-                    else if ( flyerCount == 1 )
+                    else if (flyerCount == 1)
                         message += "There is " + flyerCount + " left.";
                     else // flyerCount == 0
                     {
                         message += "It is yours!";
-                        npc.addAction( Actions.fadeOut(5.0f) );
-                        npc.addAction( Actions.after( Actions.moveBy(-10000, -10000) ) );
+                        npc.addAction(Actions.fadeOut(5.0f));
+                        npc.addAction(Actions.after(Actions.moveBy(-10000, -10000)));
                     }
                     dialogBox.setText(message);
+                } else {
+                    dialogBox.setText(npc.getText());
                 }
-                else
-                {
-                    dialogBox.setText( npc.getText() );
-                }
-                dialogBox.setVisible( true );
-                npc.setViewing( true );
+                dialogBox.setVisible(true);
+                npc.setViewing(true);
             }
-            if (npc.isViewing() && !nearby)
-            {
-                dialogBox.setText( " " );
-                dialogBox.setVisible( false );
-                npc.setViewing( false );
+            if (npc.isViewing() && !nearby) {
+                dialogBox.setText(" ");
+                dialogBox.setVisible(false);
+                npc.setViewing(false);
             }
         }
 
@@ -362,19 +350,15 @@ public class LevelScreen extends BaseScreen{
     }
 
 
-    public void shootArrow()
-    {
-        if ( hero.getArrows() <= 0 )
+    public void shootArrow() {
+        if (hero.getArrows() <= 0)
             return;
-        hero.setArrows(hero.getArrows()-1);
-        com.mygdx.game.actors.Arrow arrow = new Arrow(0,0, mainStage);
+        hero.setArrows(hero.getArrows() - 1);
+        com.mygdx.game.actors.Arrow arrow = new Arrow(0, 0, mainStage);
         arrow.centerAtActor(hero);
-        arrow.setRotation( hero.getFacingAngle() );
-        arrow.setMotionAngle( hero.getFacingAngle() );
+        arrow.setRotation(hero.getFacingAngle());
+        arrow.setMotionAngle(hero.getFacingAngle());
     }
-
-
-
 
 
     public boolean keyDown(int keycode) {
@@ -388,18 +372,15 @@ public class LevelScreen extends BaseScreen{
             swingSword();
         }
 
-        if (keycode == Input.Keys.B)
-        {
-            if (hero.overlaps(shopHeart) && hero.getCoins() >= 3)
-            {
-                hero.setCoins(hero.getCoins() -3);
-                hero.setHealth(hero.getHealth()+1);
+        if (keycode == Input.Keys.B) {
+            if (hero.overlaps(shopHeart) && hero.getCoins() >= 3) {
+                hero.setCoins(hero.getCoins() - 3);
+                hero.setHealth(hero.getHealth() + 1);
             }
-            if (hero.overlaps(shopArrow) && hero.getCoins() >= 4)
-            {
+            if (hero.overlaps(shopArrow) && hero.getCoins() >= 4) {
 
-                hero.setCoins(hero.getCoins() -4);
-                hero.setArrows(hero.getArrows()+3);
+                hero.setCoins(hero.getCoins() - 4);
+                hero.setArrows(hero.getArrows() + 3);
             }
 
 

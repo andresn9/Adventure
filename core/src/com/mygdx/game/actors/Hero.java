@@ -26,9 +26,9 @@ public class Hero extends BaseActor {
         super(x, y, s);
         String fileName = "hero.png";
         frozen = false;
-        health = 30;
-        coins = 300;
-        arrows = 30;
+        health = 3;
+        coins = 3;
+        arrows = 3;
         vulnerable = true;
         int rows = 4;
         int cols = 4;

@@ -6,6 +6,6 @@ import com.mygdx.game.actors.BaseActor;
 public class Coin extends BaseActor {
     public Coin(float x, float y, Stage s) {
         super(x, y, s);
-        loadTexture("coin.png");
+        loadTexture("map/coin.png");
     }
 }

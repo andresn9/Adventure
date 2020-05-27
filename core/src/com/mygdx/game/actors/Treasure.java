@@ -8,6 +8,6 @@ public class Treasure extends BaseActor
     public Treasure(float x, float y, Stage s)
     {
         super(x,y,s);
-        loadTexture("treasure-chest.png");
+        loadTexture("map/treasure-chest.png");
     }
 }

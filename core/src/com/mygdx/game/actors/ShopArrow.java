@@ -7,6 +7,6 @@ public class ShopArrow extends BaseActor
     public ShopArrow(float x, float y, Stage s)
     {
         super(x,y,s);
-        loadTexture("arrow-icon.png");
+        loadTexture("map/sword-icon.png");
     }
 }
