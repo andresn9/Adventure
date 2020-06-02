@@ -35,7 +35,7 @@ public class Hero extends BaseActor {
 
         Texture texture = new Texture(Gdx.files.internal(fileName), true);
         int frameWidth = texture.getWidth() / cols;
-        int frameHeight = texture.getHeight() / rows;
+        int frameHeight = (texture.getHeight() / rows);
         float frameDuration = 0.2f;
         TextureRegion[][] temp = TextureRegion.split(texture, frameWidth, frameHeight);
 
@@ -62,7 +62,7 @@ public class Hero extends BaseActor {
         setAnimation(south);
         facingAngle = 270;
 
-        setBoundaryPolygon(8);
+        setBoundaryPolygonHero(8);
         setAcceleration(40000000);
         setMaxSpeed(300);
         setDeceleration(40000000);

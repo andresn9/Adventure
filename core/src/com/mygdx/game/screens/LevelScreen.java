@@ -47,7 +47,10 @@ public class LevelScreen extends BaseScreen {
 
 
     public void initialize() {
-        com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map.tmx", mainStage);
+       // com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map2.tmx", mainStage);
+        com.mygdx.game.actors.TilemapActor tma = new TilemapActor("SampleMap/samplemap.tmx", mainStage);
+      //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
+        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
 
         MapObject startPoint = tma.getRectangleList("Start").get(0);
         MapProperties startProps = startPoint.getProperties();
@@ -96,6 +99,10 @@ public class LevelScreen extends BaseScreen {
         uiTable.add(dialogBox).colspan(8);
 
 
+        sword = new Sword(0, 0, mainStage);
+        sword.setVisible(false);
+
+    try {
         for (MapObject obj : tma.getRectangleList("Solid")) {
             MapProperties props = obj.getProperties();
             new Solid((float) props.get("x"), (float) props.get("y"),
@@ -103,9 +110,6 @@ public class LevelScreen extends BaseScreen {
                     mainStage);
         }
 
-
-        sword = new Sword(0, 0, mainStage);
-        sword.setVisible(false);
 
         for (MapObject obj : tma.getTileList("Bush")) {
             MapProperties props = obj.getProperties();
@@ -133,20 +137,27 @@ public class LevelScreen extends BaseScreen {
             s.setText((String) props.get("text"));
         }
 
-            MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
-            MapProperties shopHeartProps = shopHeartTile.getProperties();
-            shopHeart = new ShopHeart((float) shopHeartProps.get("x"), (float) shopHeartProps.get("y"),
-                    mainStage);
-            MapObject shopArrowTile = tma.getTileList("ShopArrow").get(0);
-            MapProperties shopArrowProps = shopArrowTile.getProperties();
-            shopArrow = new ShopArrow((float) shopArrowProps.get("x"), (float) shopArrowProps.get("y"),
-                    mainStage);
+        MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
+        MapProperties shopHeartProps = shopHeartTile.getProperties();
+        shopHeart = new ShopHeart((float) shopHeartProps.get("x"), (float) shopHeartProps.get("y"),
+                mainStage);
+        MapObject shopArrowTile = tma.getTileList("ShopArrow").get(0);
+        MapProperties shopArrowProps = shopArrowTile.getProperties();
+        shopArrow = new ShopArrow((float) shopArrowProps.get("x"), (float) shopArrowProps.get("y"),
+                mainStage);
 
 
-            MapObject treasureTile = tma.getTileList("Treasure").get(0);
-            MapProperties treasureProps = treasureTile.getProperties();
-            treasure = new Treasure((float) treasureProps.get("x"), (float) treasureProps.get("y"),
-                    mainStage);
+        MapObject treasureTile = tma.getTileList("Treasure").get(0);
+        MapProperties treasureProps = treasureTile.getProperties();
+        treasure = new Treasure((float) treasureProps.get("x"), (float) treasureProps.get("y"),
+                mainStage);
+
+    } catch(Exception e){
+
+    }
+    ;
+
+
 
             hero.remove();
             hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
@@ -212,14 +223,14 @@ public class LevelScreen extends BaseScreen {
                 hero.addCoin();
             }
         }
-        if (hero.overlaps(treasure)) {
+        /*if (hero.overlaps(treasure)) {
             messageLabel.setText("You win!");
             messageLabel.setColor(Color.LIME);
             messageLabel.setFontScale(2);
             messageLabel.setVisible(true);
             treasure.remove();
             gameOver = true;
-        }
+        }*/
 
         if (hero.getHealth() <= 0) {
             messageLabel.setText("Game over...");

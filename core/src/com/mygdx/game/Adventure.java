@@ -12,7 +12,7 @@ public class Adventure extends ApplicationAdapter {
 	
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+		batch = new SpriteBatch(10000);
 		img = new Texture("badlogic.jpg");
 	}
 

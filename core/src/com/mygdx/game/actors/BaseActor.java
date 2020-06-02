@@ -437,6 +437,24 @@ public class BaseActor extends Group
 
     }
 
+    public void setBoundaryPolygonHero(int numSides)
+    {
+        float w = getWidth();
+        float h = getHeight() - getHeight()/3;
+
+        float[] vertices = new float[2*numSides];
+        for (int i = 0; i < numSides; i++)
+        {
+            float angle = i * 6.28f / numSides;
+            // x-coordinate
+            vertices[2*i] = w/2 * MathUtils.cos(angle) + w/2;
+            // y-coordinate
+            vertices[2*i+1] = h/2 * MathUtils.sin(angle) + h/2;
+        }
+        boundaryPolygon = new Polygon(vertices);
+
+    }
+
     /**
      *  Returns bounding polygon for this BaseActor, adjusted by Actor's current position and rotation.
      *  @return bounding polygon for this BaseActor
@@ -449,6 +467,8 @@ public class BaseActor extends Group
         boundaryPolygon.setScale( getScaleX(), getScaleY() );        
         return boundaryPolygon;
     }
+
+
 
     /**
      *  Determine if this BaseActor overlaps other BaseActor (according to collision polygons).
