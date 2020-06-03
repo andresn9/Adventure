@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="176">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="175">
  <tileset firstgid="1" name="[A]WaterFall_pipo" tilewidth="32" tileheight="32" tilecount="576" columns="32">
   <image source="[A]WaterFall_pipo.png" width="1024" height="576"/>
  </tileset>
@@ -374,9 +374,9 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,625,0,593,609,586,0,585,610,594,0,0,0,0,0,
 0,0,5337,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,625,0,5337,593,594,625,593,609,586,0,0,0,0,0,
 0,0,0,626,0,0,0,0,0,0,0,0,0,0,0,0,0,625,0,0,0,0,0,0,0,0,0,0,0,593,594,0,585,586,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,626,0,0,626,0,0,0,0,0,0,585,586,0,617,585,610,609,586,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,626,0,0,626,0,0,0,0,0,0,585,586,0,0,585,610,609,586,0,
 586,0,0,625,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,625,0,5337,0,0,0,0,625,593,594,585,586,593,609,610,594,0,
-594,0,5337,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,585,586,0,0,0,0,0,585,610,594,617,593,594,0,5338,
+594,0,5337,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,585,586,0,0,0,0,0,585,610,594,0,593,594,0,5338,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,593,594,0,0,0,626,0,593,594,0,626,0,625,585,586,
 586,626,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,626,0,0,0,0,0,0,0,0,0,0,585,586,0,593,594,
 594,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,609,586,0,0,0,593,594,0,625,585,
@@ -702,7 +702,7 @@
   <object id="140" gid="5377" x="608" y="800" width="32" height="32"/>
   <object id="142" gid="5377" x="1056" y="736" width="32" height="32"/>
   <object id="143" gid="5377" x="672" y="320" width="32" height="32"/>
-  <object id="144" gid="5377" x="768" y="224" width="32" height="32"/>
+  <object id="144" gid="5377" x="256" y="864" width="32" height="32"/>
   <object id="145" gid="5377" x="960" y="288" width="32" height="32"/>
   <object id="146" gid="5377" x="992" y="352" width="32" height="32"/>
   <object id="147" gid="5377" x="1120" y="352" width="32" height="32"/>
@@ -751,19 +751,29 @@ I'll reward you if you find it,
 maybe I dropped it in a bush....</property>
    </properties>
   </object>
-  <object id="166" gid="5382" x="256" y="864" width="32" height="32"/>
+  <object id="166" gid="5382" x="768" y="224" width="32" height="32"/>
   <object id="168" gid="6199" x="1176" y="534.667" width="32" height="32"/>
-  <object id="171" x="68.6667" y="702" width="20" height="65.3333">
+  <object id="169" x="618.667" y="94.6667" width="24" height="94.6667">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="172" x="512" y="64" width="32" height="32">
+  <object id="171" x="544" y="92.6666" width="24" height="94.6667">
    <properties>
     <property name="name" value="Solid"/>
    </properties>
   </object>
-  <object id="173" x="480" y="2.66667" width="32" height="61.3333">
+  <object id="172" x="510.667" y="61.3333" width="32" height="32">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="173" x="476" y="1.33333" width="32" height="61.3333">
+   <properties>
+    <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="174" x="0" y="0" width="24" height="94.6667">
    <properties>
     <property name="name" value="Solid"/>
    </properties>

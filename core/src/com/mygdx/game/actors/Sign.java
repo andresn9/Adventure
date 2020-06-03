@@ -14,7 +14,7 @@ public class Sign extends Solid
     {
         super(x,y, width, height, s);
         loadTexture("map/sign.png");
-        setBoundaryPolygon(8);
+        setBoundaryRectangle();
         solid = true;
 
     }

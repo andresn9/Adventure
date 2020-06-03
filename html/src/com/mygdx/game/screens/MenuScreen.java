@@ -42,7 +42,7 @@ public class MenuScreen extends BaseScreen {
         start.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                BaseGame.setActiveScreen(new LevelScreen());
+                BaseGame.setActiveScreen(new SecondScreen());
             }
         });
 
