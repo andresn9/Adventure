@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.BaseGame;
+import com.mygdx.game.CustomGame;
 import com.mygdx.game.ItemLoader;
 import com.mygdx.game.actors.Arrow;
 import com.mygdx.game.actors.BaseActor;
@@ -208,7 +209,7 @@ public class FirstScreen extends BaseScreen {
 
         if (hero.overlaps(door)) {
             if (door.isOpen()) {
-                BaseGame.setActiveScreen(new SecondScreen());
+                new CustomGame().setActiveScreen(new SecondScreen());
             }
             hero.preventOverlap(door);
         }
@@ -315,7 +316,7 @@ public class FirstScreen extends BaseScreen {
                 hero.preventOverlap(signActor);
             }
             boolean nearby = hero.isWithinDistance(4, sign);
-            if (nearby && !sign.isViewing()) {
+            if (nearby && !sign.isViewing() && sign.getText()!=null) {
                 dialogBox.setText(sign.getText());
                 dialogBox.setVisible(true);
                 sign.setViewing(true);

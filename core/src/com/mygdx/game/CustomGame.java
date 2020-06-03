@@ -5,9 +5,17 @@ import com.mygdx.game.screens.ThirdScreen;
 
 public class CustomGame extends BaseGame
 {
+    public String lastScreen;
+
     public void create() 
     {        
         super.create();
-        setActiveScreen( new ThirdScreen());
+        setActiveScreen( new MenuScreen());
     }
+
+
+
+
+
+
 }

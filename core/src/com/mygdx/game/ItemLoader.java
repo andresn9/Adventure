@@ -8,6 +8,7 @@ import com.mygdx.game.actors.Coin;
 import com.mygdx.game.actors.Door;
 import com.mygdx.game.actors.Flyer;
 import com.mygdx.game.actors.NPC;
+import com.mygdx.game.actors.Passage;
 import com.mygdx.game.actors.Rock;
 import com.mygdx.game.actors.Sign;
 import com.mygdx.game.actors.Solid;
@@ -40,6 +41,19 @@ public class ItemLoader {
         for (MapObject obj : tma.getTileList("Bush")) {
             MapProperties props = obj.getProperties();
             new Bush((float) props.get("x"), (float) props.get("y"), mainStage);
+        }
+    }
+
+
+    public void loadPassage(){
+        for (
+                MapObject obj : tma.getRectangleList("Passage")) {
+            MapProperties props = obj.getProperties();
+            Passage passage = new Passage((float) props.get("x"), (float) props.get("y"),
+                    (float) props.get("width"), (float) props.get("height"),
+                    mainStage);
+            passage.setPlace((String) props.get("travel"));
+
         }
     }
 
@@ -129,6 +143,7 @@ public class ItemLoader {
         loadNpc();
         loadRock();
         loadSign();
+        loadPassage();
     }
 
 }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.BaseGame;
 import com.mygdx.game.ItemLoader;
@@ -16,8 +17,11 @@ import com.mygdx.game.actors.BaseActor;
 import com.mygdx.game.actors.Bush;
 import com.mygdx.game.actors.Coin;
 import com.mygdx.game.actors.DialogBox;
+import com.mygdx.game.actors.Door;
+import com.mygdx.game.actors.Flyer;
 import com.mygdx.game.actors.Hero;
 import com.mygdx.game.actors.NPC;
+import com.mygdx.game.actors.Passage;
 import com.mygdx.game.actors.ShopArrow;
 import com.mygdx.game.actors.ShopHeart;
 import com.mygdx.game.actors.Smoke;
@@ -32,22 +36,27 @@ public class ThirdScreen extends BaseScreen {
     ShopHeart shopHeart;
     ShopArrow shopArrow;
     Bush specialBush;
+    NPC brother;
     boolean keyFound;
     boolean talked;
+    long startTime;
 
     ItemLoader itemLoader;
 
+    Door door;
+    boolean stopWatchOn;
     boolean gameOver;
     Label healthLabel;
     Label coinLabel;
     Label arrowLabel;
     Label messageLabel;
     DialogBox dialogBox;
+    Label stopWatchLabel;
 
 
     public void initialize() {
         // com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map2.tmx", mainStage);
-        TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
+        TilemapActor tma = new TilemapActor("b/SampleMap/thirdmap.tmx", mainStage);
         itemLoader = new ItemLoader(tma, mainStage);
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
@@ -58,6 +67,18 @@ public class ThirdScreen extends BaseScreen {
         talked = false;
         keyFound = false;
         gameOver = false;
+        stopWatch(false);
+
+
+
+        stopWatchLabel = new Label("",BaseGame.labelStyle);
+        stopWatchLabel.setColor(Color.BLACK);
+        stopWatchLabel.setWrap(true);
+
+
+
+
+
         healthLabel = new Label(" x " + hero.getHealth(), BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
         coinLabel = new Label(" x " + hero.getCoins(), BaseGame.labelStyle);
@@ -95,13 +116,27 @@ public class ThirdScreen extends BaseScreen {
         uiTable.row();
         uiTable.add(messageLabel).colspan(8).expandX().expandY();
         uiTable.row();
+        uiTable.add(stopWatchLabel);
+        uiTable.row();
         uiTable.add(dialogBox).colspan(8);
+
+
 
 
         sword = new Sword(0, 0, mainStage);
         sword.setVisible(false);
 
         itemLoader.loadItems();
+
+        for (BaseActor npcActor : BaseActor.getList(mainStage, "NPC")) {
+            NPC npc = (NPC) npcActor;
+            if (npc.getID().equals("Brother")) {
+                brother = npc;
+            }
+        }
+
+
+
         try {
             MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
             MapProperties shopHeartProps = shopHeartTile.getProperties();
@@ -142,8 +177,21 @@ public class ThirdScreen extends BaseScreen {
         coinLabel.setText(" x " + hero.getCoins());
         arrowLabel.setText(" x " + hero.getArrows());
 
+
+        stopWatch(stopWatchOn);
+/*
+
+        minuteLabel.setText(""+minutes);
+        secondLabel.setText("" + seconds);
+        milisecondsLabel.setText("" + miliseconds);
+*/
+
+
+
         if (gameOver)
             return;
+
+
 
 
         if (!sword.isVisible() && !hero.isFrozen()) {
@@ -157,15 +205,26 @@ public class ThirdScreen extends BaseScreen {
                 hero.accelerateAtAngle(270);
             for (BaseActor solid : BaseActor.getList(mainStage, "Solid")) {
                 hero.preventOverlap(solid);
-                for (BaseActor flyer : BaseActor.getList(mainStage, "Flyer")) {
-                    if (flyer.overlaps(solid)) {
-                        flyer.preventOverlap(solid);
-                        flyer.setMotionAngle(flyer.getMotionAngle() + 180);
-                    }
+
+            }
+        }
+
+        for (BaseActor solid : BaseActor.getList(mainStage, "Solid")) {
+            for (BaseActor flyer : BaseActor.getList(mainStage, "Flyer")) {
+                if (flyer.overlaps(solid)) {
+                    flyer.preventOverlap(solid);
+                    flyer.setMotionAngle(flyer.getMotionAngle() + 180);
                 }
             }
         }
 
+
+        for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
+            if(hero.overlaps(a)){
+                Passage passage = (Passage) a;
+                passage.travel();
+            }
+        }
 
         if (sword.isVisible()) {
             for (BaseActor bush : BaseActor.getList(mainStage, "Bush")) {
@@ -369,6 +428,27 @@ public class ThirdScreen extends BaseScreen {
     }
 
 
+    public void stopWatch(boolean bool){
+        if(bool){
+
+            long totalTime = (startTime - System.currentTimeMillis());
+
+            long miliseconds = - (totalTime/10%100);
+            int minutes = -(int) (totalTime /1000) / 60;
+            int seconds = -(int) (totalTime /1000) % 60;
+
+            if(minutes<=9){
+                stopWatchLabel.setText(minutes+ " :0" + seconds + " : " + miliseconds);
+            } else {
+
+                stopWatchLabel.setText(minutes+ " : " + seconds + " : " + miliseconds);
+            }
+            }
+
+
+        }
+
+
     public void shootArrow() {
         if (hero.getArrows() <= 0)
             return;
@@ -379,10 +459,27 @@ public class ThirdScreen extends BaseScreen {
         arrow.setMotionAngle(hero.getFacingAngle());
     }
 
+    public void challenge() {
+        for (BaseActor rock : BaseActor.getList(mainStage, "Rock")) {
+            Flyer flyer = new Flyer(0, 0, mainStage);
+            flyer.centerAtActor(rock);
+            startTime = System.currentTimeMillis();
+            stopWatchOn = true;
+        }
+        System.out.println("Challenge");
+
+    }
+
 
     public boolean keyDown(int keycode) {
         if (gameOver) {
             return false;
+        }
+
+        if (keycode == Input.Keys.Y) {
+            if (hero.isWithinDistance(5, brother)) {
+                challenge();
+            }
         }
 
         if (keycode == Input.Keys.A) {
@@ -408,12 +505,26 @@ public class ThirdScreen extends BaseScreen {
 
 
         }
+/*
+        for (BaseActor npcActor : BaseActor.getList(mainStage, "NPC")) {
+            NPC npc = (NPC) npcActor;
+            if (hero.overlaps(npc) && npc.getID().equals("Brother")) {
+                if (keycode == Input.Keys.Y) {
+                    if ()
+                        challenge();
+                }
+            }
+        }*/
+
 
 
         return false;
 
 
     }
+
+
+
 
 
 }

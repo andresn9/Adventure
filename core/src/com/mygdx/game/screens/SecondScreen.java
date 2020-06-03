@@ -24,6 +24,7 @@ import com.mygdx.game.actors.DialogBox;
 import com.mygdx.game.actors.Flyer;
 import com.mygdx.game.actors.Hero;
 import com.mygdx.game.actors.NPC;
+import com.mygdx.game.actors.Passage;
 import com.mygdx.game.actors.Rock;
 import com.mygdx.game.actors.ShopArrow;
 import com.mygdx.game.actors.ShopHeart;
@@ -60,8 +61,13 @@ public class SecondScreen extends BaseScreen {
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
 
+
+
         MapObject startPoint = tma.getRectangleList("Start").get(0);
         MapProperties startProps = startPoint.getProperties();
+
+
+
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
         talked = false;
         keyFound = false;
@@ -110,6 +116,22 @@ public class SecondScreen extends BaseScreen {
         sword.setVisible(false);
 
         itemLoader.loadItems();
+
+
+
+      /* for (
+                MapObject obj : tma.getRectangleList("Passage")) {
+            MapProperties props = obj.getProperties();
+            Passage passage = new Passage((float) props.get("x"), (float) props.get("y"),
+                    (float) props.get("width"), (float) props.get("height"),
+                    mainStage);
+            passage.setPlace((String) props.get("travel"));
+
+            System.out.println();
+
+        }*/
+
+
         try {
             MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
             MapProperties shopHeartProps = shopHeartTile.getProperties();
@@ -174,6 +196,12 @@ public class SecondScreen extends BaseScreen {
             }
         }
 
+        for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
+            if(hero.overlaps(a)){
+                Passage passage = (Passage) a;
+                passage.travel();
+            }
+        }
 
         if (sword.isVisible()) {
             for (com.mygdx.game.actors.BaseActor bush : com.mygdx.game.actors.BaseActor.getList(mainStage, "Bush")) {
@@ -211,6 +239,8 @@ public class SecondScreen extends BaseScreen {
 
 
         }
+
+
 
         for (com.mygdx.game.actors.BaseActor coin : com.mygdx.game.actors.BaseActor.getList(mainStage, "Coin")) {
             if (hero.overlaps(coin)) {
@@ -342,6 +372,9 @@ public class SecondScreen extends BaseScreen {
                 npc.setViewing(false);
             }
         }
+
+
+
 
 
     }
