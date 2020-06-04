@@ -26,6 +26,7 @@ public abstract class BaseGame extends Game
 
     public static LabelStyle labelStyle; 
     public static TextButtonStyle textButtonStyle;
+    public HeroData data;
 
     /**
      *  Called when game is initialized; stores global reference to game object.
@@ -44,6 +45,7 @@ public abstract class BaseGame extends Game
         // prepare for multiple classes/stages/actors to receive discrete input
         InputMultiplexer im = new InputMultiplexer();
         Gdx.input.setInputProcessor( im );
+        HeroData.reset();
 
         // parameters for generating a custom bitmap font
        /* FreeTypeFontGenerator fontGenerator =
@@ -77,6 +79,9 @@ public abstract class BaseGame extends Game
      */
     public static void setActiveScreen(BaseScreen s)
     {
+
         game.setScreen(s);
     }
+
+
 }

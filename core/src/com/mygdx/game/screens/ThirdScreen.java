@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.BaseGame;
+import com.mygdx.game.HeroData;
 import com.mygdx.game.ItemLoader;
 import com.mygdx.game.actors.Arrow;
 import com.mygdx.game.actors.BaseActor;
@@ -64,6 +65,7 @@ public class ThirdScreen extends BaseScreen {
         MapObject startPoint = tma.getRectangleList("Start").get(0);
         MapProperties startProps = startPoint.getProperties();
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+        hero.setData(new HeroData(1,1,1,"a"));
         talked = false;
         keyFound = false;
         gameOver = false;
@@ -165,8 +167,7 @@ public class ThirdScreen extends BaseScreen {
         }
 
 
-        hero.remove();
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+
 
 
     }
@@ -437,7 +438,7 @@ public class ThirdScreen extends BaseScreen {
             int minutes = -(int) (totalTime /1000) / 60;
             int seconds = -(int) (totalTime /1000) % 60;
 
-            if(minutes<=9){
+            if(seconds<=9){
                 stopWatchLabel.setText(minutes+ " :0" + seconds + " : " + miliseconds);
             } else {
 
@@ -468,6 +469,12 @@ public class ThirdScreen extends BaseScreen {
         }
         System.out.println("Challenge");
 
+    }
+
+    public void checkChallenge(){
+        if(BaseActor.count(mainStage, "Flyer") ==0){
+            stopWatchOn = false;
+        }
     }
 
 

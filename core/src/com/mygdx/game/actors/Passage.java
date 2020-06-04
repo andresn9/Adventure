@@ -6,6 +6,7 @@ import com.mygdx.game.CustomGame;
 import com.mygdx.game.screens.SecondScreen;
 import com.mygdx.game.screens.ThirdScreen;
 
+import static com.mygdx.game.BaseGame.setActiveScreen;
 
 
 public class Passage extends BaseActor {
@@ -23,11 +24,11 @@ public class Passage extends BaseActor {
 
         switch (place){
             case "ThirdScreen":
-                (new CustomGame()).setActiveScreen(new ThirdScreen());
+                setActiveScreen(new ThirdScreen());
                 break;
 
             case "SecondScreen":
-                (new CustomGame()).setActiveScreen(new SecondScreen());
+                setActiveScreen(new SecondScreen());
                 break;
 
 
@@ -35,7 +36,9 @@ public class Passage extends BaseActor {
 
 
 
+
     }
+
 
 
     public void setPlace(String place){

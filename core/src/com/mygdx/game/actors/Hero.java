@@ -1,12 +1,20 @@
 package com.mygdx.game.actors;
 
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.JsonWriter;
+import com.mygdx.game.HeroData;
 import com.mygdx.game.actors.BaseActor;
+
+import java.io.StringWriter;
 
 public class Hero extends BaseActor {
     Animation north;
@@ -16,9 +24,8 @@ public class Hero extends BaseActor {
     private float facingAngle;
     private boolean frozen;
     private boolean vulnerable;
-    private int health;
-    private int coins;
-    private int arrows;
+    public HeroData data;
+
 
 
 
@@ -26,12 +33,16 @@ public class Hero extends BaseActor {
         super(x, y, s);
         String fileName = "hero.png";
         frozen = false;
-        health = 3;
-        coins = 3;
-        arrows = 3;
+        data = new HeroData(1,1,1,"a");
+
+
         vulnerable = true;
         int rows = 4;
         int cols = 4;
+
+
+
+
 
         Texture texture = new Texture(Gdx.files.internal(fileName), true);
         int frameWidth = texture.getWidth() / cols;
@@ -110,6 +121,14 @@ public class Hero extends BaseActor {
         applyPhysics(dt);
     }
 
+    public void setData(HeroData data){
+        this.data = data;
+    }
+
+    public void save(){
+        this.data.save();
+    }
+
     public boolean isVulnerable() {
         return vulnerable;
     }
@@ -119,7 +138,7 @@ public class Hero extends BaseActor {
     }
 
     public int getHealth() {
-        return health;
+        return data.getHealth();
     }
 
     public boolean isFrozen(){
@@ -128,24 +147,26 @@ public class Hero extends BaseActor {
 
     public void setHealth(int health) {
         if(isVulnerable()){
-        this.health = health;}
+        data.setHealth(health);
+        }
 
     }
 
     public int getCoins() {
-        return coins;
+        return data.getCoins();
     }
 
     public void setCoins(int coins) {
-        this.coins = coins;
+        data.setCoins(coins);
+
     }
 
     public int getArrows() {
-        return arrows;
+        return data.getArrows();
     }
 
     public void setArrows(int arrows) {
-        this.arrows = arrows;
+        data.setArrows(arrows);
     }
 
     public float getFacingAngle()
@@ -157,8 +178,9 @@ public class Hero extends BaseActor {
         frozen = x;
     }
     public void addCoin(){
-        coins++;
+        data.setCoins(data.getCoins()+1);
     }
+
 
 
 }

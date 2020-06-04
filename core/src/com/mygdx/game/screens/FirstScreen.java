@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.BaseGame;
 import com.mygdx.game.CustomGame;
+import com.mygdx.game.HeroData;
 import com.mygdx.game.ItemLoader;
 import com.mygdx.game.actors.Arrow;
 import com.mygdx.game.actors.BaseActor;
@@ -58,12 +59,13 @@ public class FirstScreen extends BaseScreen {
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
 
 
+
         gameOver = false;
-        healthLabel = new Label(" x " + hero.getHealth(), BaseGame.labelStyle);
+        healthLabel = new Label(" x ", BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
-        coinLabel = new Label(" x " + hero.getCoins(), BaseGame.labelStyle);
+        coinLabel = new Label(" x ", BaseGame.labelStyle);
         coinLabel.setColor(Color.GOLD);
-        arrowLabel = new Label(" x " + hero.getArrows(), BaseGame.labelStyle);
+        arrowLabel = new Label(" x ", BaseGame.labelStyle);
         arrowLabel.setColor(Color.TAN);
         messageLabel = new Label("...", BaseGame.labelStyle);
         messageLabel.setVisible(false);
@@ -129,9 +131,11 @@ public class FirstScreen extends BaseScreen {
         shopArrow = new ShopArrow((float) shopArrowProps.get("x"), (float) shopArrowProps.get("y"),
                 mainStage);
 
-
+/*
         hero.remove();
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);*/
+
+
 
 
     }

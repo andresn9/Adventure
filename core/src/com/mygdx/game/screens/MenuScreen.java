@@ -9,7 +9,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.BaseGame;
-import com.mygdx.game.CustomGame;
 
 public class MenuScreen extends BaseScreen {
 
@@ -28,6 +27,7 @@ public class MenuScreen extends BaseScreen {
         TextButton exit = new TextButton("Exit", skin);
 
 
+
         uiTable.setBackground(skin.getDrawable("background"));
         uiTable.add(start);
         uiTable.row().pad(20,0,20,0);
@@ -43,7 +43,7 @@ public class MenuScreen extends BaseScreen {
         start.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                BaseGame.setActiveScreen(new SecondScreen());
+                BaseGame.setActiveScreen(new ThirdScreen());
             }
         });
 

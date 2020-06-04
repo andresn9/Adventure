@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
@@ -11,10 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.BaseGame;
+import com.mygdx.game.HeroData;
 import com.mygdx.game.ItemLoader;
 import com.mygdx.game.actors.Arrow;
 import com.mygdx.game.actors.BaseActor;
@@ -25,6 +29,7 @@ import com.mygdx.game.actors.Flyer;
 import com.mygdx.game.actors.Hero;
 import com.mygdx.game.actors.NPC;
 import com.mygdx.game.actors.Passage;
+import com.mygdx.game.actors.Person;
 import com.mygdx.game.actors.Rock;
 import com.mygdx.game.actors.ShopArrow;
 import com.mygdx.game.actors.ShopHeart;
@@ -33,6 +38,8 @@ import com.mygdx.game.actors.Solid;
 import com.mygdx.game.actors.Sword;
 import com.mygdx.game.actors.TilemapActor;
 import com.mygdx.game.actors.Treasure;
+
+import java.io.Writer;
 
 public class SecondScreen extends BaseScreen {
     Hero hero;
@@ -66,9 +73,11 @@ public class SecondScreen extends BaseScreen {
         MapObject startPoint = tma.getRectangleList("Start").get(0);
         MapProperties startProps = startPoint.getProperties();
 
-
+        Json json = new Json();
 
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+
+
         talked = false;
         keyFound = false;
         gameOver = false;
@@ -160,8 +169,7 @@ public class SecondScreen extends BaseScreen {
         }
 
 
-        hero.remove();
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+
 
 
     }
@@ -198,6 +206,7 @@ public class SecondScreen extends BaseScreen {
 
         for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
             if(hero.overlaps(a)){
+                hero.save();
                 Passage passage = (Passage) a;
                 passage.travel();
             }
