@@ -109,22 +109,6 @@ public class ItemLoader {
         }
 
     }
-    /*
-    public void loadTreasure(){
-        MapObject treasureTile = tma.getTileList("Treasure").get(0);
-        MapProperties treasureProps = treasureTile.getProperties();
-        treasure = new Treasure((float) treasureProps.get("x"), (float) treasureProps.get("y"),
-                mainStage);
-    }
-    */
-    /*
-
-    public void loadHeartShop(){
-        MapObject doorTile = tma.getTileList("Door").get(0);
-        MapProperties doorProps = doorTile.getProperties();
-        door = new Door((float) doorProps.get("x"), (float) doorProps.get("y"), mainStage);
-        door.setOpen(false);
-    }*/
 
     public void loadDoor(){
 

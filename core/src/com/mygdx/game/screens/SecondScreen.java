@@ -1,19 +1,10 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.*;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -25,21 +16,15 @@ import com.mygdx.game.actors.BaseActor;
 import com.mygdx.game.actors.Bush;
 import com.mygdx.game.actors.Coin;
 import com.mygdx.game.actors.DialogBox;
-import com.mygdx.game.actors.Flyer;
 import com.mygdx.game.actors.Hero;
 import com.mygdx.game.actors.NPC;
 import com.mygdx.game.actors.Passage;
-import com.mygdx.game.actors.Person;
-import com.mygdx.game.actors.Rock;
 import com.mygdx.game.actors.ShopArrow;
 import com.mygdx.game.actors.ShopHeart;
 import com.mygdx.game.actors.Smoke;
-import com.mygdx.game.actors.Solid;
 import com.mygdx.game.actors.Sword;
 import com.mygdx.game.actors.TilemapActor;
 import com.mygdx.game.actors.Treasure;
-
-import java.io.Writer;
 
 public class SecondScreen extends BaseScreen {
     Hero hero;
@@ -53,7 +38,6 @@ public class SecondScreen extends BaseScreen {
 
     ItemLoader itemLoader;
 
-    boolean gameOver;
     Label healthLabel;
     Label coinLabel;
     Label arrowLabel;
@@ -62,26 +46,17 @@ public class SecondScreen extends BaseScreen {
 
 
     public void initialize() {
-        // com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map2.tmx", mainStage);
         com.mygdx.game.actors.TilemapActor tma = new TilemapActor("SampleMap/secondScreen.tmx", mainStage);
         itemLoader = new ItemLoader(tma, mainStage);
-        HeroData heroData = new HeroData(1,1,1,"s");
-        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
-        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
-
-
-
-
-
+        HeroData heroData = new HeroData(1, 1, 1, "s");
 
         talked = false;
         keyFound = false;
-        gameOver = false;
-        healthLabel = new Label(" x " , BaseGame.labelStyle);
+        healthLabel = new Label(" x ", BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
         coinLabel = new Label(" x ", BaseGame.labelStyle);
         coinLabel.setColor(Color.GOLD);
-        arrowLabel = new Label(" x " , BaseGame.labelStyle);
+        arrowLabel = new Label(" x ", BaseGame.labelStyle);
         arrowLabel.setColor(Color.TAN);
         messageLabel = new Label("...", BaseGame.labelStyle);
         messageLabel.setVisible(false);
@@ -123,20 +98,6 @@ public class SecondScreen extends BaseScreen {
         itemLoader.loadItems();
 
 
-
-      /* for (
-                MapObject obj : tma.getRectangleList("Passage")) {
-            MapProperties props = obj.getProperties();
-            Passage passage = new Passage((float) props.get("x"), (float) props.get("y"),
-                    (float) props.get("width"), (float) props.get("height"),
-                    mainStage);
-            passage.setPlace((String) props.get("travel"));
-
-            System.out.println();
-
-        }*/
-
-
         try {
             MapObject shopHeartTile = tma.getTileList("ShopHeart").get(0);
             MapProperties shopHeartProps = shopHeartTile.getProperties();
@@ -157,15 +118,10 @@ public class SecondScreen extends BaseScreen {
             specialBush = new Bush((float) bushProps.get("x"), (float) bushProps.get("y"),
                     mainStage);
 
-            System.out.println(specialBush);
-
 
         } catch (Exception e) {
-            System.out.println(specialBush);
+
         }
-
-
-
 
 
         MapObject startPoint = tma.getRectangleList("Start").get(0);
@@ -175,27 +131,26 @@ public class SecondScreen extends BaseScreen {
         MapProperties thirdProps = thirdPoint.getProperties();
 
 
-        if(heroData.getLastScreen().equals("ThirdScreen")){
+        if (heroData.getLastScreen().equals("ThirdScreen")) {
             hero = new Hero((float) thirdProps.get("x"), (float) thirdProps.get("y"), mainStage);
 
-        } else{
+        } else {
             hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
         }
-
-
 
 
     }
 
 
     public void update(float dt) {
+
+        //update GUI labels
         healthLabel.setText(" x " + hero.getHealth());
         coinLabel.setText(" x " + hero.getCoins());
         arrowLabel.setText(" x " + hero.getArrows());
 
-        if (gameOver)
-            return;
 
+        //hero movement
 
         if (!sword.isVisible() && !hero.isFrozen()) {
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
@@ -217,8 +172,11 @@ public class SecondScreen extends BaseScreen {
             }
         }
 
-        for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
-            if(hero.overlaps(a)){
+
+        //sends you to thirdScreen
+
+        for (BaseActor a : BaseActor.getList(mainStage, "Passage")) {
+            if (hero.overlaps(a)) {
                 hero.setLastScreen("SecondScreen");
                 hero.save();
                 Passage passage = (Passage) a;
@@ -227,6 +185,8 @@ public class SecondScreen extends BaseScreen {
             }
         }
 
+
+        //checks if you found the key
         if (sword.isVisible()) {
             for (com.mygdx.game.actors.BaseActor bush : com.mygdx.game.actors.BaseActor.getList(mainStage, "Bush")) {
                 if (sword.overlaps(bush)) {
@@ -265,6 +225,7 @@ public class SecondScreen extends BaseScreen {
         }
 
 
+        //removes coins when overlapped
 
         for (com.mygdx.game.actors.BaseActor coin : com.mygdx.game.actors.BaseActor.getList(mainStage, "Coin")) {
             if (hero.overlaps(coin)) {
@@ -272,14 +233,8 @@ public class SecondScreen extends BaseScreen {
                 hero.addCoin();
             }
         }
-        /*if (hero.overlaps(treasure)) {
-            messageLabel.setText("You win!");
-            messageLabel.setColor(Color.LIME);
-            messageLabel.setFontScale(2);
-            messageLabel.setVisible(true);
-            treasure.remove();
-            gameOver = true;
-        }*/
+
+        //gameover
 
         if (hero.getHealth() <= 0) {
             messageLabel.setText("Game over...");
@@ -287,8 +242,9 @@ public class SecondScreen extends BaseScreen {
             messageLabel.setFontScale(2);
             messageLabel.setVisible(true);
             hero.remove();
-            gameOver = true;
+
         }
+        //enemy behaviour
         for (com.mygdx.game.actors.BaseActor flyer : com.mygdx.game.actors.BaseActor.getList(mainStage, "Flyer")) {
             if (hero.overlaps(flyer)) {
                 hero.preventOverlap(flyer);
@@ -343,13 +299,15 @@ public class SecondScreen extends BaseScreen {
             }
         }
 
+
+        //NPC behaviour
         for (com.mygdx.game.actors.BaseActor npcActor : com.mygdx.game.actors.BaseActor.getList(mainStage, "NPC")) {
             com.mygdx.game.actors.NPC npc = (NPC) npcActor;
 
             hero.preventOverlap(npc);
             boolean nearby = hero.isWithinDistance(4, npc);
             if (nearby && !npc.isViewing()) {
-// check NPC ID for dynamic text
+                // check NPC ID for dynamic text
                 if (npc.getID().equals("Gatekeeper")) {
                     int flyerCount = BaseActor.count(mainStage, "Flyer");
                     String message = "Destroy the Flyers and you can have the treasure. ";
@@ -398,13 +356,10 @@ public class SecondScreen extends BaseScreen {
         }
 
 
-
-
-
     }
 
     public void swingSword() {
-// visibility determines if sword is currently swinging
+        // visibility determines if sword is currently swinging
         if (sword.isVisible())
             return;
         hero.setSpeed(0);
@@ -426,7 +381,7 @@ public class SecondScreen extends BaseScreen {
         sword.setVisible(true);
         sword.addAction(Actions.rotateBy(swordArc, 0.25f));
         sword.addAction(Actions.after(Actions.visible(false)));
-// hero should appear in front of sword when facing north or west
+        // hero should appear in front of sword when facing north or west
         if (facingAngle == 90 || facingAngle == 180)
             hero.toFront();
         else
@@ -446,9 +401,7 @@ public class SecondScreen extends BaseScreen {
 
 
     public boolean keyDown(int keycode) {
-        if (gameOver) {
-            return false;
-        }
+
 
         if (keycode == Input.Keys.A) {
             shootArrow();

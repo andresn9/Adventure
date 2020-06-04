@@ -44,17 +44,6 @@ public class LeaderBoard extends BaseScreen {
         back.setTransform(true);
         back.setScale(0.5f);
 
-       /* DateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy");
-        DateFormat formatterTime = new SimpleDateFormat("mm:ss");
-        Calendar calendar = Calendar.getInstance();
-*/
-
-
-
-
-
-
-
 
         int buttonSize = 380;
 
@@ -75,58 +64,12 @@ public class LeaderBoard extends BaseScreen {
         }
 
 
-
-
-
-/*
-        try {
-            ResultSet rs = getData();
-
-            while (rs.next()) {
-                calendar.setTimeInMillis(rs.getLong("id"));
-                String date = formatterDate.format(calendar.getTime());
-
-                Label dateLabel = new Label(date, BaseGame.labelStyle);
-                uiTable.add(dateLabel);
-
-
-
-
-                calendar.setTimeInMillis(rs.getLong("time"));
-                String time = formatterTime.format(calendar.getTime());
-
-                Label timeLabel = new Label(time,BaseGame.labelStyle);
-                uiTable.add(timeLabel);
-
-                uiTable.row();
-
-                System.out.println(date +"" + time);
-
-
-
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-*/
-
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 BaseGame.setActiveScreen(new MenuScreen());
             }
         });
-
-        /*start.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                BaseGame.setActiveScreen(new ThirdScreen());
-            }
-        }
-        );
-         */
 
 
     }
@@ -141,17 +84,12 @@ public class LeaderBoard extends BaseScreen {
         con.close();
 
 
-
-
-
     }
 
-    public void loadData(ResultSet rs){
+    public void loadData(ResultSet rs) {
         DateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatterTime = new SimpleDateFormat("mm:ss");
         Calendar calendar = Calendar.getInstance();
-
-
 
 
         try {
@@ -165,20 +103,14 @@ public class LeaderBoard extends BaseScreen {
                 uiTable.add(dateLabel);
 
 
-
-
                 calendar.setTimeInMillis(rs.getLong("time"));
                 String time = formatterTime.format(calendar.getTime());
 
-                Label timeLabel = new Label(time,BaseGame.labelStyle);
+                Label timeLabel = new Label(time, BaseGame.labelStyle);
                 timeLabel.setColor(Color.GOLD);
                 uiTable.add(timeLabel);
 
                 uiTable.row();
-
-
-
-
 
 
             }
@@ -186,8 +118,6 @@ public class LeaderBoard extends BaseScreen {
             e.printStackTrace();
 
         }
-
-
 
 
     }

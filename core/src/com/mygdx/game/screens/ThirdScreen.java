@@ -69,35 +69,26 @@ public class ThirdScreen extends BaseScreen {
 
 
     public void initialize() {
-        // com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map2.tmx", mainStage);
         TilemapActor tma = new TilemapActor("b/SampleMap/thirdmap.tmx", mainStage);
         itemLoader = new ItemLoader(tma, mainStage);
-        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
-        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
-
-
-
 
 
 
         talked = false;
         keyFound = false;
-        gameOver = false;
         stopWatch(false);
 
 
-
-        stopWatchLabel = new Label("",BaseGame.labelStyle);
+        stopWatchLabel = new Label("", BaseGame.labelStyle);
         stopWatchLabel.setColor(Color.BLACK);
         stopWatchLabel.setWrap(true);
 
 
-
         healthLabel = new Label(" x ", BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
-        coinLabel = new Label(" x " , BaseGame.labelStyle);
+        coinLabel = new Label(" x ", BaseGame.labelStyle);
         coinLabel.setColor(Color.GOLD);
-        arrowLabel = new Label(" x " , BaseGame.labelStyle);
+        arrowLabel = new Label(" x ", BaseGame.labelStyle);
         arrowLabel.setColor(Color.TAN);
         messageLabel = new Label("...", BaseGame.labelStyle);
         messageLabel.setVisible(false);
@@ -135,8 +126,6 @@ public class ThirdScreen extends BaseScreen {
         uiTable.add(dialogBox).colspan(8);
 
 
-
-
         sword = new Sword(0, 0, mainStage);
         sword.setVisible(false);
 
@@ -148,7 +137,6 @@ public class ThirdScreen extends BaseScreen {
                 brother = npc;
             }
         }
-
 
 
         try {
@@ -171,11 +159,11 @@ public class ThirdScreen extends BaseScreen {
             specialBush = new Bush((float) bushProps.get("x"), (float) bushProps.get("y"),
                     mainStage);
 
-            System.out.println(specialBush);
+
 
 
         } catch (Exception e) {
-            System.out.println(specialBush);
+
         }
 
 
@@ -183,10 +171,6 @@ public class ThirdScreen extends BaseScreen {
         MapProperties startProps = startPoint.getProperties();
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
         hero.setLastScreen("ThirdScreen");
-
-
-
-
 
 
     }
@@ -198,7 +182,6 @@ public class ThirdScreen extends BaseScreen {
         arrowLabel.setText(" x " + hero.getArrows());
 
 
-
         stopWatch(stopWatchOn);
 
 
@@ -207,20 +190,10 @@ public class ThirdScreen extends BaseScreen {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-/*
-        checkChallenge();
-
-        minuteLabel.setText(""+minutes);
-        secondLabel.setText("" + seconds);
-        milisecondsLabel.setText("" + miliseconds);
-*/
-
 
 
         if (gameOver)
             return;
-
-
 
 
         if (!sword.isVisible() && !hero.isFrozen()) {
@@ -248,8 +221,8 @@ public class ThirdScreen extends BaseScreen {
         }
 
 
-        for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
-            if(hero.overlaps(a)){
+        for (BaseActor a : BaseActor.getList(mainStage, "Passage")) {
+            if (hero.overlaps(a)) {
                 hero.save();
                 Passage passage = (Passage) a;
                 passage.travel();
@@ -299,14 +272,6 @@ public class ThirdScreen extends BaseScreen {
                 hero.addCoin();
             }
         }
-        /*if (hero.overlaps(treasure)) {
-            messageLabel.setText("You win!");
-            messageLabel.setColor(Color.LIME);
-            messageLabel.setFontScale(2);
-            messageLabel.setVisible(true);
-            treasure.remove();
-            gameOver = true;
-        }*/
 
         if (hero.getHealth() <= 0) {
             if (hero.getHealth() <= 0) {
@@ -422,12 +387,10 @@ public class ThirdScreen extends BaseScreen {
         }
 
 
-
-
     }
 
     public void swingSword() {
-// visibility determines if sword is currently swinging
+
         if (sword.isVisible())
             return;
         hero.setSpeed(0);
@@ -457,25 +420,26 @@ public class ThirdScreen extends BaseScreen {
     }
 
 
-    public void stopWatch(boolean bool){
-        if(bool){
+    //stops timer
+    public void stopWatch(boolean bool) {
+        if (bool) {
 
             totalTime = (startTime - System.currentTimeMillis());
 
-            long miliseconds = - (totalTime/10%100);
-            int minutes = -(int) (totalTime /1000) / 60;
-            int seconds = -(int) (totalTime /1000) % 60;
+            long miliseconds = -(totalTime / 10 % 100);
+            int minutes = -(int) (totalTime / 1000) / 60;
+            int seconds = -(int) (totalTime / 1000) % 60;
 
-            if(seconds<=9){
-                stopWatchLabel.setText(minutes+ " :0" + seconds + " : " + miliseconds);
+            if (seconds <= 9) {
+                stopWatchLabel.setText(minutes + " :0" + seconds + " : " + miliseconds);
             } else {
 
-                stopWatchLabel.setText(minutes+ " : " + seconds + " : " + miliseconds);
+                stopWatchLabel.setText(minutes + " : " + seconds + " : " + miliseconds);
             }
-            }
-
-
         }
+
+
+    }
 
 
     public void shootArrow() {
@@ -488,6 +452,8 @@ public class ThirdScreen extends BaseScreen {
         arrow.setMotionAngle(hero.getFacingAngle());
     }
 
+
+    //starts challenge
     public void challenge() {
         for (BaseActor rock : BaseActor.getList(mainStage, "Rock")) {
             Flyer flyer = new Flyer(0, 0, mainStage);
@@ -496,31 +462,31 @@ public class ThirdScreen extends BaseScreen {
             stopWatchOn = true;
             challengeOn = true;
         }
-        System.out.println("Challenge");
+
 
     }
 
+    //inserts score to database
     public void checkChallenge() throws SQLException {
-        if(BaseActor.count(mainStage, "Flyer") ==0 && challengeOn){
+        if (BaseActor.count(mainStage, "Flyer") == 0 && challengeOn) {
             stopWatchOn = false;
             this.challengeOn = false;
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/adventure?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","root");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/adventure?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
             Statement smt = con.createStatement();
             long now = System.currentTimeMillis();
-            int rs = smt.executeUpdate("INSERT into score (id, time) values("+ now + "," + -totalTime +")");
+            int rs = smt.executeUpdate("INSERT into score (id, time) values(" + now + "," + -totalTime + ")");
             con.close();
 
             win();
-
-
 
 
         }
     }
 
 
-    public void win(){
+
+    public void win() {
         messageLabel.setText("CONGRATULATIONS! YOU WON!");
         messageLabel.setColor(Color.YELLOW);
         messageLabel.setFontScale(1.5f);
@@ -538,26 +504,13 @@ public class ThirdScreen extends BaseScreen {
 
         }, delay);
 
-        /*
-        SequenceAction sequenceAction = new SequenceAction();
-        sequenceAction.addAction(Actions.fadeOut(4f));
-        sequenceAction.addAction(Actions.run(new Runnable() {
-            @Override
-            public void run() {
-                BaseGame.setActiveScreen(new LeaderBoard());
-            }
-        }));
-        mainStage.getRoot().addAction(sequenceAction);*/
-
 
 
     }
 
 
     public boolean keyDown(int keycode) {
-        if (gameOver) {
-            return false;
-        }
+
 
         if (keycode == Input.Keys.Y) {
             if (hero.isWithinDistance(5, brother)) {
@@ -588,16 +541,6 @@ public class ThirdScreen extends BaseScreen {
 
 
         }
-/*
-        for (BaseActor npcActor : BaseActor.getList(mainStage, "NPC")) {
-            NPC npc = (NPC) npcActor;
-            if (hero.overlaps(npc) && npc.getID().equals("Brother")) {
-                if (keycode == Input.Keys.Y) {
-                    if ()
-                        challenge();
-                }
-            }
-        }*/
 
 
 
@@ -605,9 +548,6 @@ public class ThirdScreen extends BaseScreen {
 
 
     }
-
-
-
 
 
 }

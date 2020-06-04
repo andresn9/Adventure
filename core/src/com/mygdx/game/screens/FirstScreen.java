@@ -50,9 +50,6 @@ public class FirstScreen extends BaseScreen {
     public void initialize() {
         com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map2.tmx", mainStage);
         itemLoader = new ItemLoader(tma,mainStage);
-        // TilemapActor tma = new TilemapActor("SampleMap/samplemap.tmx", mainStage);
-        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
-        //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
 
 
 
@@ -336,7 +333,7 @@ public class FirstScreen extends BaseScreen {
     }
 
     public void swingSword() {
-// visibility determines if sword is currently swinging
+
         if (sword.isVisible())
             return;
         hero.setSpeed(0);

@@ -22,6 +22,7 @@ public class GameOverScreen extends BaseScreen {
     public void initialize() {
 
 
+        HeroData.reset();
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         skin.add("background", new Texture("gameOver.jpg"));
         TextButton retry = new TextButton("Retry?", skin);
@@ -38,10 +39,6 @@ public class GameOverScreen extends BaseScreen {
         uiTable.add(retry).width(buttonSize);
 
 
-
-        HeroData.reset();
-
-
         exit.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -49,13 +46,15 @@ public class GameOverScreen extends BaseScreen {
             }
         });
 
+
         retry.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
 
                 BaseGame.setActiveScreen(new FirstScreen());
 
-        }});
+            }
+        });
 
 
         menu.addListener(new ChangeListener() {
@@ -66,14 +65,9 @@ public class GameOverScreen extends BaseScreen {
         });
 
 
-
-
-
-
-
-
-
     }
+
+
 
     @Override
     public void update(float dt) {

@@ -55,7 +55,7 @@ public class TilemapActor extends Actor
         tiledCamera.setToOrtho(false, windowWidth, windowHeight);
         tiledCamera.update();
 
-        // by adding object to Stage, can be drawn automatically
+
         theStage.addActor(this);
 
         // in theory, a solid boundary should be placed around the edge of the screen, 
@@ -159,8 +159,7 @@ public class TilemapActor extends Actor
         tiledCamera.update();
         tiledMapRenderer.setView(tiledCamera);
 
-        // need the following code to force batch order,
-        //  otherwise it is batched and rendered last
+
         batch.end();
         tiledMapRenderer.render();        
         batch.begin();
