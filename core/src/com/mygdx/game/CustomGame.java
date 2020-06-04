@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.mygdx.game.screens.LeaderBoard;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.SecondScreen;
 import com.mygdx.game.screens.ThirdScreen;
@@ -11,7 +12,7 @@ public class CustomGame extends BaseGame
     public void create() 
     {        
         super.create();
-        setActiveScreen( new SecondScreen());
+        setActiveScreen( new LeaderBoard());
     }
 
 

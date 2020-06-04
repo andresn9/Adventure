@@ -30,6 +30,12 @@ import com.mygdx.game.actors.Sword;
 import com.mygdx.game.actors.TilemapActor;
 import com.mygdx.game.actors.Treasure;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class ThirdScreen extends BaseScreen {
     Hero hero;
     Sword sword;
@@ -41,6 +47,9 @@ public class ThirdScreen extends BaseScreen {
     boolean keyFound;
     boolean talked;
     long startTime;
+    long totalTime;
+    boolean challengeOn;
+
 
     ItemLoader itemLoader;
 
@@ -62,10 +71,11 @@ public class ThirdScreen extends BaseScreen {
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
 
-        MapObject startPoint = tma.getRectangleList("Start").get(0);
-        MapProperties startProps = startPoint.getProperties();
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
-        hero.setData(new HeroData(1,1,1,"a"));
+
+
+
+
+
         talked = false;
         keyFound = false;
         gameOver = false;
@@ -79,13 +89,11 @@ public class ThirdScreen extends BaseScreen {
 
 
 
-
-
-        healthLabel = new Label(" x " + hero.getHealth(), BaseGame.labelStyle);
+        healthLabel = new Label(" x ", BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
-        coinLabel = new Label(" x " + hero.getCoins(), BaseGame.labelStyle);
+        coinLabel = new Label(" x " , BaseGame.labelStyle);
         coinLabel.setColor(Color.GOLD);
-        arrowLabel = new Label(" x " + hero.getArrows(), BaseGame.labelStyle);
+        arrowLabel = new Label(" x " , BaseGame.labelStyle);
         arrowLabel.setColor(Color.TAN);
         messageLabel = new Label("...", BaseGame.labelStyle);
         messageLabel.setVisible(false);
@@ -167,6 +175,10 @@ public class ThirdScreen extends BaseScreen {
         }
 
 
+        MapObject startPoint = tma.getRectangleList("Start").get(0);
+        MapProperties startProps = startPoint.getProperties();
+        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+        hero.setData(new HeroData(1,1,1,"a"));
 
 
 
@@ -179,8 +191,18 @@ public class ThirdScreen extends BaseScreen {
         arrowLabel.setText(" x " + hero.getArrows());
 
 
+
+
         stopWatch(stopWatchOn);
+
+
+        try {
+            checkChallenge();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 /*
+        checkChallenge();
 
         minuteLabel.setText(""+minutes);
         secondLabel.setText("" + seconds);
@@ -432,7 +454,7 @@ public class ThirdScreen extends BaseScreen {
     public void stopWatch(boolean bool){
         if(bool){
 
-            long totalTime = (startTime - System.currentTimeMillis());
+            totalTime = (startTime - System.currentTimeMillis());
 
             long miliseconds = - (totalTime/10%100);
             int minutes = -(int) (totalTime /1000) / 60;
@@ -466,14 +488,24 @@ public class ThirdScreen extends BaseScreen {
             flyer.centerAtActor(rock);
             startTime = System.currentTimeMillis();
             stopWatchOn = true;
+            challengeOn = true;
         }
         System.out.println("Challenge");
 
     }
 
-    public void checkChallenge(){
-        if(BaseActor.count(mainStage, "Flyer") ==0){
+    public void checkChallenge() throws SQLException {
+        if(BaseActor.count(mainStage, "Flyer") ==0 && challengeOn){
             stopWatchOn = false;
+            this.challengeOn = false;
+
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/adventure?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC","root","root");
+            Statement smt = con.createStatement();
+            long now = System.currentTimeMillis();
+            int rs = smt.executeUpdate("INSERT into score (id, time) values("+ now + "," + -totalTime +")");
+            con.close();
+
+
         }
     }
 

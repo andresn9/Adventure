@@ -24,14 +24,20 @@ public class MenuScreen extends BaseScreen {
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         skin.add("background", new Texture("menuBackground.gif"));
         TextButton start = new TextButton("Start", skin);
+        TextButton leaderBoard = new TextButton("Leaderboard", skin);
         TextButton exit = new TextButton("Exit", skin);
 
 
+        int buttonSize = 380;
 
         uiTable.setBackground(skin.getDrawable("background"));
-        uiTable.add(start);
+        uiTable.add(start).width(buttonSize);
         uiTable.row().pad(20,0,20,0);
-        uiTable.add(exit);
+        uiTable.add(leaderBoard).width(buttonSize);
+        uiTable.row().pad(20,0,20,0);
+        uiTable.add(exit).width(buttonSize);
+
+
 
         exit.addListener(new ChangeListener() {
             @Override

@@ -37,6 +37,7 @@ allprojects {
         google()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven {url "https://mvnrepository.com/artifact/mysql/mysql-connector-java"}
     }
 }
 
@@ -123,6 +124,7 @@ project(":core") {
         api "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-ai:$aiVersion"
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+        implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.13'
         
     }
 }

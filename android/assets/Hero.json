@@ -1,6 +1,6 @@
 {
-health: 3
-arrows: 3
-coins: 3
+health: 30
+arrows: 30
+coins: 30
 lastScreen: ""
 }
