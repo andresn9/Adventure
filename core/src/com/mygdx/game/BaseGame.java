@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.mygdx.game.screens.BaseScreen;
+import com.mygdx.game.tools.HeroData;
 
 /**
  *  Created when program is launched; 
@@ -26,7 +27,7 @@ public abstract class BaseGame extends Game
 
     public static LabelStyle labelStyle; 
     public static TextButtonStyle textButtonStyle;
-    public HeroData data;
+    public com.mygdx.game.tools.HeroData data;
 
     /**
      *  Called when game is initialized; stores global reference to game object.

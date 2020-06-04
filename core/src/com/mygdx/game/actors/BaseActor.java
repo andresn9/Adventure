@@ -34,10 +34,7 @@ import java.lang.reflect.*;
 /**
  * Extends functionality of the LibGDX Actor class.
  * by adding support for textures/animation, 
- * collision polygons, movement, world boundaries, and camera scrolling. 
- * Most game objects should extend this class; lists of extensions can be retrieved by stage and class name.
- * @see #Actor
- * @author Lee Stemkoski
+ * collision polygons, movement, world boundaries, and camera scrolling.
  */
 public class BaseActor extends Group
 {

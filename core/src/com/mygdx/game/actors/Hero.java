@@ -1,20 +1,12 @@
 package com.mygdx.game.actors;
 
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
-import com.badlogic.gdx.utils.JsonWriter;
-import com.mygdx.game.HeroData;
-import com.mygdx.game.actors.BaseActor;
-
-import java.io.StringWriter;
+import com.mygdx.game.tools.HeroData;
 
 public class Hero extends BaseActor {
     Animation north;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="40" height="43" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="338">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="40" height="43" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="339">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" tilecount="1064" columns="8">
   <image source="[Base]BaseChip_pipo.png" width="256" height="4256"/>
   <tile id="40">
@@ -514,6 +514,11 @@
   <object id="337" x="1270" y="192" width="32" height="1184">
    <properties>
     <property name="name" value="Solid"/>
+   </properties>
+  </object>
+  <object id="338" gid="236" x="640" y="992" width="32" height="32">
+   <properties>
+    <property name="text" value="Press S to swing your sword and A to throw an arrow."/>
    </properties>
   </object>
  </objectgroup>

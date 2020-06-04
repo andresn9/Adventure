@@ -9,8 +9,8 @@ import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.mygdx.game.BaseGame;
-import com.mygdx.game.HeroData;
-import com.mygdx.game.ItemLoader;
+import com.mygdx.game.tools.HeroData;
+import com.mygdx.game.tools.ItemLoader;
 import com.mygdx.game.actors.Arrow;
 import com.mygdx.game.actors.BaseActor;
 import com.mygdx.game.actors.Bush;
@@ -25,6 +25,9 @@ import com.mygdx.game.actors.Smoke;
 import com.mygdx.game.actors.Sword;
 import com.mygdx.game.actors.TilemapActor;
 import com.mygdx.game.actors.Treasure;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class SecondScreen extends BaseScreen {
     Hero hero;
@@ -113,15 +116,21 @@ public class SecondScreen extends BaseScreen {
             treasure = new Treasure((float) treasureProps.get("x"), (float) treasureProps.get("y"),
                     mainStage);
 
-            MapObject bushTile = tma.getTileList("SpecialBush").get(0);
+          /*  MapObject bushTile = tma.getTileList("SpecialBush").get(0);
             MapProperties bushProps = bushTile.getProperties();
             specialBush = new Bush((float) bushProps.get("x"), (float) bushProps.get("y"),
-                    mainStage);
+                    mainStage);*/
 
 
         } catch (Exception e) {
 
         }
+
+        ArrayList<BaseActor> bushes = BaseActor.getList(mainStage,"Bush");
+        Random random = new Random();
+        int n = random.nextInt(bushes.size());
+        specialBush = (Bush) bushes.get(n);
+
 
 
         MapObject startPoint = tma.getRectangleList("Start").get(0);
@@ -330,7 +339,7 @@ public class SecondScreen extends BaseScreen {
                         talked = true;
 
                         hero.setFrozen(true);
-                        float delay = 2f; // seconds
+                        float delay = 4f; // seconds
                         Timer.schedule(new Timer.Task() {
                             @Override
                             public void run() {

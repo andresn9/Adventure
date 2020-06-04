@@ -10,7 +10,6 @@ import java.awt.Menu;
 
 public class CustomGame extends BaseGame
 {
-    public String lastScreen;
 
     public void create() 
     {        

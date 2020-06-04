@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.BaseGame;
-import com.mygdx.game.HeroData;
+import com.mygdx.game.tools.HeroData;
 
 public class GameOverScreen extends BaseScreen {
 

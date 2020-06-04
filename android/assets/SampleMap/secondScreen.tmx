@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="182">
+<map version="1.2" tiledversion="1.3.4" orientation="orthogonal" renderorder="right-down" width="36" height="32" tilewidth="32" tileheight="32" infinite="0" nextlayerid="15" nextobjectid="183">
  <tileset firstgid="1" name="[A]WaterFall_pipo" tilewidth="32" tileheight="32" tilecount="576" columns="32">
   <image source="[A]WaterFall_pipo.png" width="1024" height="576"/>
  </tileset>
@@ -779,7 +779,6 @@ I'll reward you if you find it,
 maybe I dropped it in a bush....</property>
    </properties>
   </object>
-  <object id="166" gid="5382" x="768" y="224" width="32" height="32"/>
   <object id="168" gid="6199" x="1176" y="534.667" width="32" height="32"/>
   <object id="169" x="618.667" y="94.6667" width="24" height="94.6667">
    <properties>
@@ -818,5 +817,6 @@ maybe I dropped it in a bush....</property>
     <property name="travel" value="from"/>
    </properties>
   </object>
+  <object id="182" gid="5377" x="768" y="224" width="32" height="32"/>
  </objectgroup>
 </map>

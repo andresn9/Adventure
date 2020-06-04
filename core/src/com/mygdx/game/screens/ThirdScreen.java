@@ -7,13 +7,10 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Timer;
 import com.mygdx.game.BaseGame;
-import com.mygdx.game.HeroData;
-import com.mygdx.game.ItemLoader;
+import com.mygdx.game.tools.ItemLoader;
 import com.mygdx.game.actors.Arrow;
 import com.mygdx.game.actors.BaseActor;
 import com.mygdx.game.actors.Bush;
@@ -33,12 +30,10 @@ import com.mygdx.game.actors.Treasure;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
 public class ThirdScreen extends BaseScreen {
     Hero hero;
@@ -71,7 +66,6 @@ public class ThirdScreen extends BaseScreen {
     public void initialize() {
         TilemapActor tma = new TilemapActor("b/SampleMap/thirdmap.tmx", mainStage);
         itemLoader = new ItemLoader(tma, mainStage);
-
 
 
         talked = false;
@@ -158,8 +152,6 @@ public class ThirdScreen extends BaseScreen {
             MapProperties bushProps = bushTile.getProperties();
             specialBush = new Bush((float) bushProps.get("x"), (float) bushProps.get("y"),
                     mainStage);
-
-
 
 
         } catch (Exception e) {
@@ -472,18 +464,20 @@ public class ThirdScreen extends BaseScreen {
             stopWatchOn = false;
             this.challengeOn = false;
 
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/adventure?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
-            Statement smt = con.createStatement();
-            long now = System.currentTimeMillis();
-            int rs = smt.executeUpdate("INSERT into score (id, time) values(" + now + "," + -totalTime + ")");
-            con.close();
+            try {
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/adventure?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "root");
+                Statement smt = con.createStatement();
+                long now = System.currentTimeMillis();
+                int rs = smt.executeUpdate("INSERT into score (id, time) values(" + now + "," + -totalTime + ")");
+                con.close();
+            } catch (Exception e) {
+            }
 
             win();
 
 
         }
     }
-
 
 
     public void win() {
@@ -503,7 +497,6 @@ public class ThirdScreen extends BaseScreen {
             }
 
         }, delay);
-
 
 
     }
@@ -541,7 +534,6 @@ public class ThirdScreen extends BaseScreen {
 
 
         }
-
 
 
         return false;
