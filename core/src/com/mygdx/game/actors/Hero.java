@@ -129,6 +129,14 @@ public class Hero extends BaseActor {
         this.data.save();
     }
 
+    public void setLastScreen(String lastScreen){
+        data.lastScreen = lastScreen;
+    }
+
+    public String getLastScreen(){
+        return data.getLastScreen();
+    }
+
     public boolean isVulnerable() {
         return vulnerable;
     }

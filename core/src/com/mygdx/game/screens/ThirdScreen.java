@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.utils.Timer;
@@ -35,6 +36,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.run;
 
 public class ThirdScreen extends BaseScreen {
     Hero hero;
@@ -178,7 +182,10 @@ public class ThirdScreen extends BaseScreen {
         MapObject startPoint = tma.getRectangleList("Start").get(0);
         MapProperties startProps = startPoint.getProperties();
         hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
-        hero.setData(new HeroData(1,1,1,"a"));
+        hero.setLastScreen("ThirdScreen");
+
+
+
 
 
 
@@ -189,7 +196,6 @@ public class ThirdScreen extends BaseScreen {
         healthLabel.setText(" x " + hero.getHealth());
         coinLabel.setText(" x " + hero.getCoins());
         arrowLabel.setText(" x " + hero.getArrows());
-
 
 
 
@@ -244,6 +250,7 @@ public class ThirdScreen extends BaseScreen {
 
         for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
             if(hero.overlaps(a)){
+                hero.save();
                 Passage passage = (Passage) a;
                 passage.travel();
             }
@@ -257,7 +264,7 @@ public class ThirdScreen extends BaseScreen {
                         messageLabel.setColor(Color.YELLOW);
                         messageLabel.setFontScale(1);
                         messageLabel.setVisible(true);
-                        messageLabel.addAction(Actions.fadeOut(2.0f));
+                        messageLabel.addAction(fadeOut(2.0f));
                         specialBush.remove();
                         keyFound = true;
 
@@ -302,12 +309,9 @@ public class ThirdScreen extends BaseScreen {
         }*/
 
         if (hero.getHealth() <= 0) {
-            messageLabel.setText("Game over...");
-            messageLabel.setColor(Color.RED);
-            messageLabel.setFontScale(2);
-            messageLabel.setVisible(true);
-            hero.remove();
-            gameOver = true;
+            if (hero.getHealth() <= 0) {
+                BaseGame.setActiveScreen(new GameOverScreen());
+            }
         }
         for (BaseActor flyer : BaseActor.getList(mainStage, "Flyer")) {
             if (hero.overlaps(flyer)) {
@@ -357,7 +361,7 @@ public class ThirdScreen extends BaseScreen {
                 if (arrow.overlaps(solid)) {
                     arrow.preventOverlap(solid);
                     arrow.setSpeed(0);
-                    arrow.addAction(Actions.fadeOut(0.5f));
+                    arrow.addAction(fadeOut(0.5f));
                     arrow.addAction(Actions.after(Actions.removeActor()));
                 }
             }
@@ -380,7 +384,7 @@ public class ThirdScreen extends BaseScreen {
                     else // flyerCount == 0
                     {
                         message += "It is yours!";
-                        npc.addAction(Actions.fadeOut(5.0f));
+                        npc.addAction(fadeOut(5.0f));
                         npc.addAction(Actions.after(Actions.moveBy(-10000, -10000)));
                     }
                     dialogBox.setText(message);
@@ -416,6 +420,8 @@ public class ThirdScreen extends BaseScreen {
                 npc.setViewing(false);
             }
         }
+
+
 
 
     }
@@ -505,8 +511,46 @@ public class ThirdScreen extends BaseScreen {
             int rs = smt.executeUpdate("INSERT into score (id, time) values("+ now + "," + -totalTime +")");
             con.close();
 
+            win();
+
+
+
 
         }
+    }
+
+
+    public void win(){
+        messageLabel.setText("CONGRATULATIONS! YOU WON!");
+        messageLabel.setColor(Color.YELLOW);
+        messageLabel.setFontScale(1.5f);
+        messageLabel.setVisible(true);
+        messageLabel.addAction(Actions.fadeOut(2f));
+
+        float delay = 3f; // seconds
+        Timer.schedule(new Timer.Task() {
+            @Override
+            public void run() {
+
+                BaseGame.setActiveScreen(new LeaderBoard());
+
+            }
+
+        }, delay);
+
+        /*
+        SequenceAction sequenceAction = new SequenceAction();
+        sequenceAction.addAction(Actions.fadeOut(4f));
+        sequenceAction.addAction(Actions.run(new Runnable() {
+            @Override
+            public void run() {
+                BaseGame.setActiveScreen(new LeaderBoard());
+            }
+        }));
+        mainStage.getRoot().addAction(sequenceAction);*/
+
+
+
     }
 
 

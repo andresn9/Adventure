@@ -54,9 +54,6 @@ public class FirstScreen extends BaseScreen {
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
 
-        MapObject startPoint = tma.getRectangleList("Start").get(0);
-        MapProperties startProps = startPoint.getProperties();
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
 
 
 
@@ -131,9 +128,12 @@ public class FirstScreen extends BaseScreen {
         shopArrow = new ShopArrow((float) shopArrowProps.get("x"), (float) shopArrowProps.get("y"),
                 mainStage);
 
-/*
-        hero.remove();
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);*/
+        MapObject startPoint = tma.getRectangleList("Start").get(0);
+        MapProperties startProps = startPoint.getProperties();
+
+
+        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+        hero.setLastScreen("FirstScreen");
 
 
 
@@ -201,7 +201,7 @@ public class FirstScreen extends BaseScreen {
         }
 
         if (hero.overlaps(treasure)) {
-            messageLabel.setText("You got the key to the city");
+            messageLabel.setText("You got the key to the town");
             messageLabel.setColor(Color.BLUE);
             messageLabel.setFontScale(1);
             messageLabel.setVisible(true);
@@ -213,19 +213,16 @@ public class FirstScreen extends BaseScreen {
 
         if (hero.overlaps(door)) {
             if (door.isOpen()) {
-                new CustomGame().setActiveScreen(new SecondScreen());
+                hero.save();
+                BaseGame.setActiveScreen(new SecondScreen());
             }
             hero.preventOverlap(door);
         }
 
 
         if (hero.getHealth() <= 0) {
-            messageLabel.setText("Game over...");
-            messageLabel.setColor(Color.RED);
-            messageLabel.setFontScale(2);
-            messageLabel.setVisible(true);
-            hero.remove();
-            gameOver = true;
+
+            BaseGame.setActiveScreen(new GameOverScreen());
         }
         for (BaseActor flyer : BaseActor.getList(mainStage, "Flyer")) {
             if (hero.overlaps(flyer)) {

@@ -65,27 +65,23 @@ public class SecondScreen extends BaseScreen {
         // com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/map2.tmx", mainStage);
         com.mygdx.game.actors.TilemapActor tma = new TilemapActor("SampleMap/secondScreen.tmx", mainStage);
         itemLoader = new ItemLoader(tma, mainStage);
+        HeroData heroData = new HeroData(1,1,1,"s");
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("map/maptest.tmx", mainStage);
         //  com.mygdx.game.actors.TilemapActor tma = new TilemapActor("b/SampleMap/samplemap.tmx", mainStage);
 
 
 
-        MapObject startPoint = tma.getRectangleList("Start").get(0);
-        MapProperties startProps = startPoint.getProperties();
 
-        Json json = new Json();
-
-        hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
 
 
         talked = false;
         keyFound = false;
         gameOver = false;
-        healthLabel = new Label(" x " + hero.getHealth(), BaseGame.labelStyle);
+        healthLabel = new Label(" x " , BaseGame.labelStyle);
         healthLabel.setColor(Color.PINK);
-        coinLabel = new Label(" x " + hero.getCoins(), BaseGame.labelStyle);
+        coinLabel = new Label(" x ", BaseGame.labelStyle);
         coinLabel.setColor(Color.GOLD);
-        arrowLabel = new Label(" x " + hero.getArrows(), BaseGame.labelStyle);
+        arrowLabel = new Label(" x " , BaseGame.labelStyle);
         arrowLabel.setColor(Color.TAN);
         messageLabel = new Label("...", BaseGame.labelStyle);
         messageLabel.setVisible(false);
@@ -172,6 +168,23 @@ public class SecondScreen extends BaseScreen {
 
 
 
+        MapObject startPoint = tma.getRectangleList("Start").get(0);
+        MapProperties startProps = startPoint.getProperties();
+
+        MapObject thirdPoint = tma.getRectangleList("fromTS").get(0);
+        MapProperties thirdProps = thirdPoint.getProperties();
+
+
+        if(heroData.getLastScreen().equals("ThirdScreen")){
+            hero = new Hero((float) thirdProps.get("x"), (float) thirdProps.get("y"), mainStage);
+
+        } else{
+            hero = new Hero((float) startProps.get("x"), (float) startProps.get("y"), mainStage);
+        }
+
+
+
+
     }
 
 
@@ -206,9 +219,11 @@ public class SecondScreen extends BaseScreen {
 
         for(BaseActor a : BaseActor.getList(mainStage, "Passage")){
             if(hero.overlaps(a)){
+                hero.setLastScreen("SecondScreen");
                 hero.save();
                 Passage passage = (Passage) a;
                 passage.travel();
+
             }
         }
 

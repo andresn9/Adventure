@@ -1,12 +1,14 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -34,9 +36,14 @@ public class LeaderBoard extends BaseScreen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
         skin.add("background", new Texture("menuBackground.gif"));
-        TextButton name = new TextButton("Name", skin);
+        TextButton name = new TextButton("Date", skin);
         TextButton score = new TextButton("Score", skin);
-        TextButton exit = new TextButton("Exit", skin);
+        TextButton back = new TextButton("Back", skin);
+
+
+        back.setTransform(true);
+        back.setScale(0.5f);
+
        /* DateFormat formatterDate = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatterTime = new SimpleDateFormat("mm:ss");
         Calendar calendar = Calendar.getInstance();
@@ -46,7 +53,7 @@ public class LeaderBoard extends BaseScreen {
 
 
 
-        Window window = new Window("Windows", skin);
+
 
 
         int buttonSize = 380;
@@ -54,6 +61,8 @@ public class LeaderBoard extends BaseScreen {
 
         uiTable.setBackground(skin.getDrawable("background"));
         uiTable.top();
+        uiTable.add(back).reset();
+        uiTable.row();
         uiTable.pad(20);
         uiTable.add(name);
         uiTable.add(score);
@@ -64,6 +73,11 @@ public class LeaderBoard extends BaseScreen {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+
+
+
+
 /*
         try {
             ResultSet rs = getData();
@@ -98,10 +112,10 @@ public class LeaderBoard extends BaseScreen {
         }
 */
 
-        exit.addListener(new ChangeListener() {
+        back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
+                BaseGame.setActiveScreen(new MenuScreen());
             }
         });
 
@@ -138,6 +152,8 @@ public class LeaderBoard extends BaseScreen {
         Calendar calendar = Calendar.getInstance();
 
 
+
+
         try {
 
             while (rs.next()) {
@@ -145,6 +161,7 @@ public class LeaderBoard extends BaseScreen {
                 String date = formatterDate.format(calendar.getTime());
 
                 Label dateLabel = new Label(date, BaseGame.labelStyle);
+                dateLabel.setColor(Color.GOLD);
                 uiTable.add(dateLabel);
 
 
@@ -154,11 +171,12 @@ public class LeaderBoard extends BaseScreen {
                 String time = formatterTime.format(calendar.getTime());
 
                 Label timeLabel = new Label(time,BaseGame.labelStyle);
+                timeLabel.setColor(Color.GOLD);
                 uiTable.add(timeLabel);
 
                 uiTable.row();
 
-                System.out.println(date +"" + time);
+
 
 
 
@@ -168,6 +186,7 @@ public class LeaderBoard extends BaseScreen {
             e.printStackTrace();
 
         }
+
 
 
 

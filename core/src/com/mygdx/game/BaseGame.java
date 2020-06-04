@@ -47,6 +47,7 @@ public abstract class BaseGame extends Game
         Gdx.input.setInputProcessor( im );
         HeroData.reset();
 
+
         // parameters for generating a custom bitmap font
        /* FreeTypeFontGenerator fontGenerator =
             new FreeTypeFontGenerator(Gdx.files.internal("OpenSans.ttf"));
@@ -79,7 +80,6 @@ public abstract class BaseGame extends Game
      */
     public static void setActiveScreen(BaseScreen s)
     {
-
         game.setScreen(s);
     }
 

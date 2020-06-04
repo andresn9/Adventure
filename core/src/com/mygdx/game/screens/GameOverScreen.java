@@ -9,8 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.mygdx.game.BaseGame;
+import com.mygdx.game.HeroData;
 
-public class MenuScreen extends BaseScreen {
+public class GameOverScreen extends BaseScreen {
 
 
     Button playButton;
@@ -22,21 +23,23 @@ public class MenuScreen extends BaseScreen {
 
 
         Skin skin = new Skin(Gdx.files.internal("skin/glassy-ui.json"));
-        skin.add("background", new Texture("menuBackground.gif"));
-        TextButton start = new TextButton("Start", skin);
-        TextButton leaderBoard = new TextButton("Leaderboard", skin);
+        skin.add("background", new Texture("gameOver.jpg"));
+        TextButton retry = new TextButton("Retry?", skin);
+        TextButton menu = new TextButton("Menu", skin);
         TextButton exit = new TextButton("Exit", skin);
 
 
-        int buttonSize = 380;
+        int buttonSize = 300;
 
         uiTable.setBackground(skin.getDrawable("background"));
-        uiTable.add(start).width(buttonSize);
-        uiTable.row().pad(20,0,20,0);
-        uiTable.add(leaderBoard).width(buttonSize);
-        uiTable.row().pad(20,0,20,0);
-        uiTable.add(exit).width(buttonSize);
+        uiTable.bottom();
+        uiTable.padBottom(30);
+        uiTable.add(menu).width(buttonSize);
+        uiTable.add(retry).width(buttonSize);
 
+
+
+        HeroData.reset();
 
 
         exit.addListener(new ChangeListener() {
@@ -46,18 +49,19 @@ public class MenuScreen extends BaseScreen {
             }
         });
 
-        start.addListener(new ChangeListener() {
+        retry.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+
                 BaseGame.setActiveScreen(new FirstScreen());
-            }
-        });
+
+        }});
 
 
-        leaderBoard.addListener(new ChangeListener() {
+        menu.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                BaseGame.setActiveScreen(new LeaderBoard());
+                BaseGame.setActiveScreen(new MenuScreen());
             }
         });
 
